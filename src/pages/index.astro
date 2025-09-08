@@ -7,15 +7,127 @@ import penguins from "../assets/penguins.json";
 
 <Layout>
   <h1 class="text-2xl">Test Astro et Plot (Observablehq)</h1>
-  <PlotFigure
-    options={{
-      marks: [
-        Plot.dot(penguins, {
-          x: "culmen_length_mm",
-          y: "culmen_depth_mm",
-          stroke: "species",
-        }),
-      ],
-    }}
-  />
+  
+  <div class="navigation-section mb-8">
+    <h2 class="text-xl mb-4">Voir les données par espèce :</h2>
+    <div class="species-buttons flex gap-4 flex-wrap justify-center mb-6">
+      <a href="/species/Adelie" class="btn btn-adelie">
+        📊 Voir Adelie uniquement
+      </a>
+      <a href="/species/Gentoo" class="btn btn-gentoo">
+        📊 Voir Gentoo uniquement
+      </a>
+      <a href="/species/Chinstrap" class="btn btn-chinstrap">
+        📊 Voir Chinstrap uniquement
+      </a>
+    </div>
+    
+    <div class="other-pages flex gap-4 flex-wrap justify-center mb-6">
+      <a href="/test-iframe" class="btn btn-secondary">
+        🖼️ Test Iframe
+      </a>
+      <a href="/single-page-anchors" class="btn btn-secondary">
+        ⚓ Page avec ancres
+      </a>
+    </div>
+  </div>
+
+  <div class="chart-section">
+    <h2 class="text-xl mb-4">Graphique général - Toutes les espèces</h2>
+    <PlotFigure
+      options={{
+        marks: [
+          Plot.dot(penguins, {
+            x: "culmen_length_mm",
+            y: "culmen_depth_mm",
+            stroke: "species",
+          }),
+        ],
+      }}
+    />
+  </div>
 </Layout>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+  html, body {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+  }
+
+  .navigation-section {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .btn-adelie {
+    background-color: #ff6b6b;
+    color: white;
+  }
+
+  .btn-adelie:hover {
+    background-color: #ff5252;
+  }
+
+  .btn-gentoo {
+    background-color: #4ecdc4;
+    color: white;
+  }
+
+  .btn-gentoo:hover {
+    background-color: #26d0ce;
+  }
+
+  .btn-chinstrap {
+    background-color: #feca57;
+    color: #333;
+  }
+
+  .btn-chinstrap:hover {
+    background-color: #ff9ff3;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background-color: #545b62;
+  }
+
+  .chart-section {
+    padding: 20px 0;
+  }
+
+  @media (max-width: 768px) {
+    .species-buttons, .other-pages {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .btn {
+      width: 250px;
+      text-align: center;
+    }
+  }
+</style>

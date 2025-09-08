@@ -1,0 +1,30 @@
+---
+import GraphicSpecies from "../../components/GraphicSpecies.astro";
+import Layout from "../../layouts/Layout.astro";
+---
+<Layout>
+    <nav class="species-nav">
+        <a href="/" class="back-link">← Retour accueil</a>
+        <div class="species-links">
+            <a href="/species/Adelie" class="active adelie">Adelie</a>
+            <a href="/species/Gentoo" class="gentoo">Gentoo</a>
+            <a href="/species/Chinstrap" class="chinstrap">Chinstrap</a>
+        </div>
+    </nav>
+    <GraphicSpecies species="Adelie" />
+</Layout>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+    :root { font-family: 'Inter', Arial, sans-serif; }
+    .species-nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e0e0e0; }
+    .back-link { color: #666; text-decoration: none; font-weight: 500; }
+    .species-links { display: flex; gap: 15px; }
+    .species-links a { padding: 8px 16px; text-decoration: none; border-radius: 4px; font-weight: 500; }
+    .adelie.active { background-color: #ff6b6b; color: white; }
+    .adelie:not(.active) { background-color: #ffe6e6; color: #ff6b6b; }
+    .gentoo.active { background-color: #4ecdc4; color: white; }
+    .gentoo:not(.active) { background-color: #e6f9f8; color: #4ecdc4; }
+    .chinstrap.active { background-color: #feca57; color: #333; }
+    .chinstrap:not(.active) { background-color: #fff8e6; color: #cc9900; }
+</style>

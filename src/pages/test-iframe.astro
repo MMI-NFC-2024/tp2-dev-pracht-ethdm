@@ -1,0 +1,192 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+    <div class="iframe-container">
+        <h1 class="text-2xl mb-6">Test Iframe - Navigation des espèces</h1>
+        
+        <nav class="iframe-nav mb-6">
+            <h2 class="text-lg mb-4">Choisir une espèce :</h2>
+            <div class="nav-buttons">
+                <a href="/species/Adelie" target="species-frame" class="btn btn-adelie">
+                    Adelie
+                </a>
+                <a href="/species/Gentoo" target="species-frame" class="btn btn-gentoo">
+                    Gentoo
+                </a>
+                <a href="/species/Chinstrap" target="species-frame" class="btn btn-chinstrap">
+                    Chinstrap
+                </a>
+            </div>
+        </nav>
+        
+        <div class="iframe-wrapper">
+            <iframe 
+                name="species-frame" 
+                src="/species/Adelie" 
+                id="species-iframe"
+                title="Visualisation des espèces de pingouins">
+            </iframe>
+        </div>
+        
+        <div class="back-home mt-6">
+            <a href="/" class="btn btn-secondary">← Retour à l'accueil</a>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+    html, body, .iframe-container {
+        font-family: 'Inter', Arial, Helvetica, sans-serif;
+    }
+
+    .iframe-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .iframe-nav {
+        text-align: center;
+        padding: 20px 0;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .nav-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        font-family: 'Inter', Arial, Helvetica, sans-serif;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .btn-adelie {
+        background-color: #ff6b6b;
+        color: white;
+    }
+
+    .btn-adelie:hover {
+        background-color: #ff5252;
+    }
+
+    .btn-gentoo {
+        background-color: #4ecdc4;
+        color: white;
+    }
+
+    .btn-gentoo:hover {
+        background-color: #26d0ce;
+    }
+
+    .btn-chinstrap {
+        background-color: #feca57;
+        color: #333;
+    }
+
+    .btn-chinstrap:hover {
+        background-color: #ff9ff3;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #545b62;
+    }
+
+    .iframe-wrapper {
+        width: 100%;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    #species-iframe {
+        width: 100%;
+        height: 600px;
+        border: none;
+        display: block;
+    }
+
+    .back-home {
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        .nav-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .btn {
+            width: 200px;
+            text-align: center;
+        }
+        
+        #species-iframe {
+            height: 500px;
+        }
+    }
+</style>
+
+<script>
+    const iframe = document.getElementById('species-iframe');
+    
+    if (iframe) {
+        iframe.addEventListener('load', function() {
+            try {
+                const iframeDocument = iframe.contentDocument || iframe.contentWindow?.document;
+                
+                if (iframeDocument) {
+                    const height = Math.max(
+                        iframeDocument.body.scrollHeight,
+                        iframeDocument.documentElement.scrollHeight,
+                        600
+                    );
+                    
+                    iframe.style.height = Math.min(height, 800) + 'px';
+                }
+            } catch(error) {
+                console.log('Impossible d\'ajuster automatiquement la hauteur de l\'iframe');
+                iframe.style.height = '600px';
+            }
+        });
+
+        document.querySelectorAll('.nav-buttons .btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.nav-buttons .btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                this.classList.add('active');
+                
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+    }
+</script>

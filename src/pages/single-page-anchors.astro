@@ -1,0 +1,248 @@
+---
+import Layout from "../layouts/Layout.astro";
+import GraphicSpecies from "../components/GraphicSpecies.astro";
+---
+<!-- Ajout de la font Inter via Google Fonts -->
+<Layout>
+    <div class="single-page-container">
+        <nav class="anchor-menu">
+            <div class="menu-content">
+                <h2 class="text-lg font-bold">Navigation :</h2>
+                <div class="anchor-links">
+                    <a href="#adelie" class="anchor-btn adelie">Adelie</a>
+                    <a href="#gentoo" class="anchor-btn gentoo">Gentoo</a>
+                    <a href="#chinstrap" class="anchor-btn chinstrap">Chinstrap</a>
+                </div>
+                <a href="/" class="back-home">← Accueil</a>
+            </div>
+        </nav>
+        
+        <div class="main-content">
+            <h1 class="text-2xl mb-6">Toutes les espèces - Navigation par ancres</h1>
+            <div class="slider-container">
+                <div class="slider-wrapper">
+                    <section id="adelie" class="slide">
+                        <GraphicSpecies species="Adelie" />
+                    </section>
+                    <section id="gentoo" class="slide">
+                        <GraphicSpecies species="Gentoo" />
+                    </section>
+                    <section id="chinstrap" class="slide">
+                        <GraphicSpecies species="Chinstrap" />
+                    </section>
+                </div>
+            </div>
+            <div class="slide-indicators">
+                <div class="indicator" data-slide="adelie"></div>
+                <div class="indicator" data-slide="gentoo"></div>
+                <div class="indicator" data-slide="chinstrap"></div>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<!-- Ajout de la font Inter -->
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    html, body, .single-page-container {
+        font-family: 'Inter', Arial, sans-serif;
+    }
+    .single-page-container {
+        position: relative;
+    }
+    .anchor-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid #e0e0e0;
+        z-index: 100;
+        padding: 10px 0;
+    }
+    .menu-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+    }
+    .anchor-links {
+        display: flex;
+        gap: 15px;
+    }
+    .anchor-btn {
+        padding: 8px 16px;
+        text-decoration: none;
+        border-radius: 20px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        font-family: 'Inter', Arial, sans-serif;
+    }
+    .anchor-btn.adelie {
+        background-color: #ffe6e6;
+        color: #ff6b6b;
+        border-color: #ff6b6b;
+    }
+    .anchor-btn.adelie:hover,
+    .anchor-btn.adelie.active {
+        background-color: #ff6b6b;
+        color: white;
+    }
+    .anchor-btn.gentoo {
+        background-color: #e6f9f8;
+        color: #4ecdc4;
+        border-color: #4ecdc4;
+    }
+    .anchor-btn.gentoo:hover,
+    .anchor-btn.gentoo.active {
+        background-color: #4ecdc4;
+        color: white;
+    }
+    .anchor-btn.chinstrap {
+        background-color: #fff8e6;
+        color: #cc9900;
+        border-color: #feca57;
+    }
+    .anchor-btn.chinstrap:hover,
+    .anchor-btn.chinstrap.active {
+        background-color: #feca57;
+        color: #333;
+    }
+    .back-home {
+        color: #666;
+        text-decoration: none;
+        font-weight: 500;
+        font-family: 'Inter', Arial, sans-serif;
+    }
+    .back-home:hover {
+        color: #333;
+    }
+    .main-content {
+        margin-top: 80px;
+        padding: 20px;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: 'Inter', Arial, sans-serif;
+    }
+    .slider-container {
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    .slider-wrapper {
+        display: flex;
+        scroll-behavior: smooth;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+    }
+    .slide {
+        min-width: 100%;
+        scroll-snap-align: start;
+        padding: 0;
+        font-family: 'Inter', Arial, sans-serif;
+    }
+    .slide-indicators {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    .indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #ddd;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .indicator.active {
+        background-color: #007acc;
+        transform: scale(1.2);
+    }
+    @media (max-width: 768px) {
+        .menu-content {
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px 20px;
+        }
+        .anchor-links {
+            gap: 10px;
+        }
+        .anchor-btn {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+        .main-content {
+            margin-top: 120px;
+            padding: 10px;
+        }
+    }
+</style>
+
+<script>
+    document.querySelectorAll('.anchor-btn').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                const container = document.querySelector('.slider-wrapper');
+                const targetOffset = targetElement.offsetLeft;
+                container.scrollTo({
+                    left: targetOffset,
+                    behavior: 'smooth'
+                });
+                updateActiveButton(targetId);
+                updateActiveIndicator(targetId);
+            }
+        });
+    });
+    function updateActiveButton(activeId) {
+        document.querySelectorAll('.anchor-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector(`a[href="#${activeId}"]`)?.classList.add('active');
+    }
+    function updateActiveIndicator(activeId) {
+        document.querySelectorAll('.indicator').forEach(indicator => {
+            indicator.classList.remove('active');
+        });
+        document.querySelector(`[data-slide="${activeId}"]`)?.classList.add('active');
+    }
+    const container = document.querySelector('.slider-wrapper');
+    container.addEventListener('scroll', () => {
+        const slides = document.querySelectorAll('.slide');
+        const scrollLeft = container.scrollLeft;
+        const containerWidth = container.offsetWidth;
+        slides.forEach(slide => {
+            if (scrollLeft >= slide.offsetLeft - containerWidth / 2 &&
+                    scrollLeft < slide.offsetLeft + slide.offsetWidth - containerWidth / 2) {
+                const id = slide.getAttribute('id');
+                updateActiveButton(id);
+                updateActiveIndicator(id);
+            }
+        });
+    });
+    document.querySelectorAll('.indicator').forEach(indicator => {
+        indicator.addEventListener('click', () => {
+            const targetId = indicator.getAttribute('data-slide');
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                container.scrollTo({
+                    left: targetElement.offsetLeft,
+                    behavior: 'smooth'
+                });
+                updateActiveButton(targetId);
+                updateActiveIndicator(targetId);
+            }
+        });
+    });
+    updateActiveButton('adelie');
+    updateActiveIndicator('adelie');
+</script>

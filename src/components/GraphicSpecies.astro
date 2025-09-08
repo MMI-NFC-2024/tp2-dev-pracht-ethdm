@@ -1,0 +1,49 @@
+---
+import PlotFigure from "./PlotFigure.astro";
+import * as Plot from "@observablehq/plot";
+import penguins from "../assets/penguins.json";
+
+export interface Props {
+    species: string;
+}
+
+const { species } = Astro.props;
+const filteredPenguins = penguins.filter(({species: s}) => s === species);
+
+const speciesColors = {
+    "Adelie": "#ff6b6b",
+    "Gentoo": "#4ecdc4", 
+    "Chinstrap": "#feca57"
+};
+const speciesColor = speciesColors[species] || "#666";
+---
+
+<div class="graphic-species-container">
+    <h2>Pingouins {species}</h2>
+    <p>{filteredPenguins.length} individus de l'espèce {species}</p>
+    <PlotFigure
+        options={{
+            marks: [
+                Plot.dot(filteredPenguins, {
+                    x: "culmen_length_mm",
+                    y: "culmen_depth_mm",
+                    fill: speciesColor,
+                    stroke: speciesColor,
+                    strokeWidth: 1.5,
+                }),
+            ],
+            grid: true,
+            marginLeft: 60,
+            marginBottom: 50,
+        }}
+    />
+</div>
+
+<style>
+.graphic-species-container {
+    padding: 20px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    margin-bottom: 20px;
+}
+</style>
