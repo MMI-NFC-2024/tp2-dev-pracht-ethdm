@@ -10,21 +10,17 @@ import penguins from "../assets/penguins.json";
   
   <div class="navigation-section mb-8">
     <h2 class="text-xl mb-4">Voir les données par espèce :</h2>
-    <select id="species">
-      <option value="">Sélectionnez une espèce</option>
-      <option value="Adelie">Adelie</option>
-      <option value="Chinstrap">Chinstrap</option>
-      <option value="Gentoo">Gentoo</option>
-    </select>
-    <script>
-document.querySelector("#species")?.addEventListener("change", (evt) => {
-  const value = (evt.target as HTMLSelectElement).value;
-  if (value) {
-    // Navigation vers le sous-dossier species
-    window.location.href = `/species/${value}`;
-  }
-});
-    </script>
+    <div class="species-buttons flex gap-4 flex-wrap justify-center mb-6">
+      <a href="/species/Adelie" class="btn btn-adelie">
+        📊 Voir Adelie uniquement
+      </a>
+      <a href="/species/Gentoo" class="btn btn-gentoo">
+        📊 Voir Gentoo uniquement
+      </a>
+      <a href="/species/Chinstrap" class="btn btn-chinstrap">
+        📊 Voir Chinstrap uniquement
+      </a>
+    </div>
     
     <div class="other-pages flex gap-4 flex-wrap justify-center mb-6">
       <a href="/test-iframe" class="btn btn-secondary">
@@ -65,22 +61,6 @@ document.querySelector("#species")?.addEventListener("change", (evt) => {
     background-color: #f8f9fa;
     border-radius: 8px;
     margin-bottom: 30px;
-  }
-
-  #species {
-    padding: 10px 15px;
-    border-radius: 6px;
-    border: 2px solid #ddd;
-    font-size: 16px;
-    font-family: 'Inter', Arial, Helvetica, sans-serif;
-    background-color: white;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-
-  #species:focus {
-    outline: none;
-    border-color: #4ecdc4;
   }
 
   .btn {
